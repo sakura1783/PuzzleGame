@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     public float etoDistance = 1.0f;  //スワイプでつながる干支の範囲
 
+    [SerializeField] private UIManager uiManager;
+
 
     IEnumerator Start()
     {
@@ -226,6 +228,9 @@ public class GameManager : MonoBehaviour
                 Destroy(eraseEtoList[i].gameObject);
             }
 
+            //スコアと消した干支の数の加算
+            AddScores(currentEtoType, eraseEtoList.Count);
+
             //消した干支の数だけ新しい干支をランダムに生成
             StartCoroutine(CreateEtos(eraseEtoList.Count));
 
@@ -288,5 +293,22 @@ public class GameManager : MonoBehaviour
     {
         //現在ドラッグしている干支のアルファ値を変更
         dragEto.imgEto.color = new Color(dragEto.imgEto.color.r, dragEto.imgEto.color.g, dragEto.imgEto.color.b, alphaValue);
+    }
+
+    /// <summary>
+    /// スコアと消した干支の数を加算
+    /// </summary>
+    /// <param name="etoType"></param>
+    /// <param name="count"></param>
+    private void AddScores(EtoType? etoType, int count)
+    {
+        //スコアを加算
+        GameData.instance.score += GameData.instance.etoPoint * count;
+
+        //消した干支の数を加算
+        GameData.instance.eraseEtoCount += count;
+
+        //画面の更新処理
+        uiManager.UpdateDisplayScore();
     }
 }

@@ -10,6 +10,12 @@ public class GameData : MonoBehaviour
 
     public int createEtoCount;  //ゲーム開始時に生成する干支の数
 
+    public int score = 0;
+
+    public int etoPoint = 100;
+
+    public int eraseEtoCount = 0;
+
 
     void Awake()
     {
@@ -22,5 +28,18 @@ public class GameData : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        InitGame();
+    }
+
+    /// <summary>
+    /// ゲームの初期化
+    /// </summary>
+    private void InitGame()
+    {
+        score = 0;
+        eraseEtoCount = 0;
+
+        Debug.Log("Init Game");
     }
 }
