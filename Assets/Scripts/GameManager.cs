@@ -42,9 +42,15 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        //干支を繋げる処理
         if (Input.GetMouseButtonDown(0) && firstSelectEto == null)
         {
             OnStartDrag();
+        }
+        //干支のドラッグをやめた(指を離した)際の処理
+        else if (Input.GetMouseButtonUp(0))
+        {
+            OnEndDrag();
         }
         //上のif文がtrueでない場合、(つまりマウスの左ボタンがクリックされたがfirstSelectEtoがnullではない場合)
         else if (firstSelectEto != null)
@@ -200,6 +206,49 @@ public class GameManager : MonoBehaviour
                 }
             }   
         }
+    }
+
+    /// <summary>
+    /// 干支のドラッグをやめた(指を画面から離した)際の処理
+    /// </summary>
+    private void OnEndDrag()
+    {
+        //つながっている干支が3つ以上あったら削除する処理に移る
+        if (eraseEtoList.Count >= 3)
+        {
+            //選択されている干支を消す
+            for (int i = 0; i < eraseEtoList.Count; i++)
+            {
+                //干支リストから取り除く
+                etoList.Remove(eraseEtoList[i]);
+
+                //干支を削除
+                Destroy(eraseEtoList[i].gameObject);
+            }
+
+            //消した干支の数だけ新しい干支をランダムに生成
+            StartCoroutine(CreateEtos(eraseEtoList.Count));
+
+            //削除リストを空にする
+            eraseEtoList.Clear();
+        }
+        //つながっている干支が2つ以下の場合
+        else
+        {
+            //削除リストから、削除候補であった干支を取り除く
+            for (int i = 0; i < eraseEtoList.Count; i++)
+            {
+                //各干支の選択中の状態を解除する
+                eraseEtoList[i].isSelected = false;
+
+                ChangeEtoAlpha(eraseEtoList[i], 1.0f);
+            }
+        }
+
+        //次回の干支を消す処理のために、各変数の値をnullにする
+        firstSelectEto = null;
+        lastSelectEto = null;
+        currentEtoType = null;
     }
 
     /// <summary>
