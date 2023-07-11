@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    /// <summary>
+    /// ゲームの進行状況
+    /// </summary>
+    public enum GameState
+    {
+        Select,  //干支の選択中
+        Ready,  //ゲームの準備中
+        Play,
+        Result,  
+    }
+
+    public GameState gameState = GameState.Select;
+
     [SerializeField] private Eto etoPrefab;
 
     [SerializeField] private Transform etoSetTran;
@@ -37,6 +50,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Start()
     {
+        gameState = GameState.Ready;
+
         //干支の画像を読み込む。この処理が終了するまで、次の処理へは行かないようにする
         yield return StartCoroutine(LoadEtoSprites());
 
@@ -48,6 +63,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (gameState != GameState.Play)
+        {
+            return;
+        }
+
         //干支を繋げる処理
         if (Input.GetMouseButtonDown(0) && firstSelectEto == null)
         {
@@ -78,8 +98,8 @@ public class GameManager : MonoBehaviour
         {
             GameData.instance.gameTime = 0;
 
-            //TODO ゲーム終了を追加する
-            Debug.Log("ゲーム終了");
+            //ゲーム終了
+            StartCoroutine(GameUp());
         }
 
         uiManager.UpdateDisplayGameTime(GameData.instance.gameTime);
@@ -126,6 +146,12 @@ public class GameManager : MonoBehaviour
             etoList.Add(eto);
 
             yield return new WaitForSeconds(0.03f);
+
+            //gameStateが準備中の時だけGameStateをPlayに変更
+            if (gameState == GameState.Ready)
+            {
+                gameState = GameState.Play;
+            }
         }
     }
 
@@ -333,5 +359,20 @@ public class GameManager : MonoBehaviour
 
         //画面の更新処理
         uiManager.UpdateDisplayScore();
+    }
+
+    /// <summary>
+    /// ゲーム終了処理
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator GameUp()
+    {
+        //GameStateをResultに変更 = Updateの処理が動かなくなる
+        gameState = GameState.Result;
+
+        yield return new WaitForSeconds(1.5f);
+
+        //TODO リザルトの処理を実装する
+        Debug.Log("リザルトのポップアップを移動させます");
     }
 }
