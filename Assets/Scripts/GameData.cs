@@ -14,7 +14,11 @@ public class GameData : MonoBehaviour
 
     public int etoPoint = 100;
 
-    public int eraseEtoCount = 0;
+    public int eraseEtoCount = 0;  //消した干支の数
+
+    [SerializeField] private int initTime = 60;  //1回のゲーム時間
+
+    public float gameTime;  //残り時間
 
 
     void Awake()
@@ -39,6 +43,7 @@ public class GameData : MonoBehaviour
     {
         score = 0;
         eraseEtoCount = 0;
+        gameTime = initTime;
 
         Debug.Log("Init Game");
     }

@@ -32,11 +32,15 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private UIManager uiManager;
 
+    private float timer;
+
 
     IEnumerator Start()
     {
         //干支の画像を読み込む。この処理が終了するまで、次の処理へは行かないようにする
         yield return StartCoroutine(LoadEtoSprites());
+
+        uiManager.UpdateDisplayGameTime(GameData.instance.gameTime);
 
         //引数で指定した数の干支を生成する
         StartCoroutine(CreateEtos(GameData.instance.createEtoCount));
@@ -60,6 +64,25 @@ public class GameManager : MonoBehaviour
             //干支のドラッグ(スワイプ)中の処理
             OnDragging();
         }
+
+        //ゲームの残り時間の表示更新処理
+        timer += Time.deltaTime;
+
+        if (timer >= 1)
+        {
+            timer = 0;
+
+            GameData.instance.gameTime--;
+        }
+        if (GameData.instance.gameTime <= 0)
+        {
+            GameData.instance.gameTime = 0;
+
+            //TODO ゲーム終了を追加する
+            Debug.Log("ゲーム終了");
+        }
+
+        uiManager.UpdateDisplayGameTime(GameData.instance.gameTime);
     } 
 
     private IEnumerator LoadEtoSprites()

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private Text txtScore;
+    [SerializeField] private Text txtTimer;
 
 
     /// <summary>
@@ -14,5 +15,10 @@ public class UIManager : MonoBehaviour
     public void UpdateDisplayScore()
     {
         txtScore.text = GameData.instance.score.ToString();
+    }
+
+    public void UpdateDisplayGameTime(float time)
+    {
+        txtTimer.text = time.ToString("F0");
     }
 }
