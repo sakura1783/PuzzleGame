@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -46,6 +47,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIManager uiManager;
 
     private float timer;
+
+    [SerializeField] private GameObject resultPop;
 
 
     IEnumerator Start()
@@ -372,7 +375,22 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-        //TODO リザルトの処理を実装する
-        Debug.Log("リザルトのポップアップを移動させます");
+        //リザルトのポップアップを画面内に移動
+        yield return StartCoroutine(MoveResultPopUp());
+    }
+
+    /// <summary>
+    /// リザルトポップアップを画面内に移動
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator MoveResultPopUp()
+    {
+        resultPop.transform.DOLocalMoveY(0, 1.0f).SetEase(Ease.Linear)
+            .OnComplete(() =>
+            {
+                Debug.Log("リザルト内容を表示します");
+            });
+
+        yield return new WaitForSeconds(1);
     }
 }

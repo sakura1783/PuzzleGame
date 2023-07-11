@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1900}
   m_SizeDelta: {x: 800, y: 1100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &121030823
@@ -1201,6 +1201,7 @@ MonoBehaviour:
   linkCount: 0
   etoDistance: 1
   uiManager: {fileID: 1807477338}
+  resultPop: {fileID: 121030821}
 --- !u!4 &901638065
 Transform:
   m_ObjectHideFlags: 0
