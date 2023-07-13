@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
@@ -31,8 +32,17 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// 画面表示スコアの更新処理
     /// </summary>
-    public void UpdateDisplayScore()
+    public void UpdateDisplayScore(bool isSelectEto = false)
     {
+        if (isSelectEto)
+        {
+            //選択している干支の場合にはスコアを大きく表示する演出を入れる
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(txtScore.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.1f).SetEase(Ease.InCirc));
+            sequence.AppendInterval(0.1f);
+            sequence.Append(txtScore.transform.DOScale(Vector3.one, 0.1f).SetEase(Ease.Linear));
+        }
+
         txtScore.text = GameData.instance.score.ToString();
     }
 

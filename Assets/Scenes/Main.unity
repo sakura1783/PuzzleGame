@@ -1291,7 +1291,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681830144}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -3589,6 +3589,10 @@ PrefabInstance:
     - target: {fileID: 3210736881502834937, guid: 1f64718e3ded64faba77ded06a5da90a, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3210736881502834937, guid: 1f64718e3ded64faba77ded06a5da90a, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3210736881502834943, guid: 1f64718e3ded64faba77ded06a5da90a, type: 3}
       propertyPath: m_Name

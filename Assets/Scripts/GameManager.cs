@@ -436,14 +436,26 @@ public class GameManager : MonoBehaviour
     /// <param name="count"></param>
     private void AddScores(EtoType? etoType, int count)
     {
-        //スコアを加算
-        GameData.instance.score += GameData.instance.etoPoint * count;
+        bool isSelectEto = false;
+
+        //選択している干支の場合にはスコアを多く加算
+        if (etoType == GameData.instance.selectedEtoData.etoType)
+        {
+            GameData.instance.score += Mathf.CeilToInt(GameData.instance.etoPoint * count * GameData.instance.etoRate);
+
+            isSelectEto = true;
+        }
+        else
+        {
+            //スコアを加算
+            GameData.instance.score += GameData.instance.etoPoint * count;
+        }
 
         //消した干支の数を加算
         GameData.instance.eraseEtoCount += count;
 
         //画面の更新処理
-        uiManager.UpdateDisplayScore();
+        uiManager.UpdateDisplayScore(isSelectEto);
     }
 
     /// <summary>
