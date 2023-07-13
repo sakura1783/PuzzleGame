@@ -11,12 +11,16 @@ public class ResultPopUp : MonoBehaviour
 
     [SerializeField] private Button btnClosePop;
 
+    //[SerializeField] private CanvasGroup btnClosePopCanvasGroup;
+
     private float posY;  //ResultPopUpのY軸位置保存用(元の位置に戻す際に使う)
 
 
     void Start()
     {
         btnClosePop.interactable = false;
+        btnClosePop.image.raycastTarget = false;
+        //btnClosePopCanvasGroup.blocksRaycasts = false;
 
         posY = transform.position.y;
 
@@ -63,7 +67,12 @@ public class ResultPopUp : MonoBehaviour
         sequence.AppendInterval(0.5f);
 
         //⑤透明になっているbtnClosePopUpとその子要素をCanvasGroupのAlphaを使用して徐々に表示
-        sequence.Append(btnClosePop.gameObject.GetComponent<CanvasGroup>().DOFade(1.0f, 1.0f).SetEase(Ease.Linear).OnComplete(() => btnClosePop.interactable = true));
+        sequence.Append(btnClosePop.gameObject.GetComponent<CanvasGroup>().DOFade(1.0f, 1.0f).SetEase(Ease.Linear))
+            .OnComplete(() =>
+            {
+                btnClosePop.image.raycastTarget = true;
+                btnClosePop.interactable = true;
+            });
     }
 
     /// <summary>
@@ -72,6 +81,8 @@ public class ResultPopUp : MonoBehaviour
     private void OnClickButtonClosePopUp()
     {
         btnClosePop.interactable = false;
+        btnClosePop.image.raycastTarget = false;
+        //btnClosePopCanvasGroup.blocksRaycasts = false;
 
         //ResultPopUpを画面外の位置に戻す
         transform.DOMoveY(posY, 1.0f);

@@ -57,6 +57,8 @@ public class GameManager : MonoBehaviour
     {
         gameState = GameState.Ready;
 
+        yield return StartCoroutine(uiManager.SetUpUIManager());
+
         //干支の画像を読み込む。この処理が終了するまで、次の処理へは行かないようにする
         //yield return StartCoroutine(LoadEtoSprites());
 
@@ -171,6 +173,8 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator CreateEtos(int count)
     {
+        uiManager.ActivateShuffleButton(false);
+
         for (int i = 0; i < count; i++)
         {
             Eto eto = Instantiate(etoPrefab, etoSetTran, false);
@@ -187,13 +191,15 @@ public class GameManager : MonoBehaviour
 
             etoList.Add(eto);
 
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForSeconds(0.03f); 
+        }
 
-            //gameStateが準備中の時だけGameStateをPlayに変更
-            if (gameState == GameState.Ready)
-            {
-                gameState = GameState.Play;
-            }
+        uiManager.ActivateShuffleButton(true);
+
+        //gameStateが準備中の時だけGameStateをPlayに変更
+        if (gameState == GameState.Ready)
+        {
+            gameState = GameState.Play;
         }
     }
 
@@ -409,6 +415,8 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator GameUp()
     {
+        uiManager.ActivateShuffleButton(false);
+
         //GameStateをResultに変更 = Updateの処理が動かなくなる
         gameState = GameState.Result;
 

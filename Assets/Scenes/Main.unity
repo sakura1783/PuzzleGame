@@ -2830,6 +2830,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   txtScore: {fileID: 843360677}
   txtTimer: {fileID: 235031259}
+  btnShuffle: {fileID: 198761546}
+  shuffle: {fileID: 1507839546}
 --- !u!1001 &1823876488
 PrefabInstance:
   m_ObjectHideFlags: 0

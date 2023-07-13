@@ -69,7 +69,7 @@ public class Shuffle : MonoBehaviour
         capsuleCol.enabled = false;
 
         //再度シャッフルボタンを押せるようにする
-        //uiManager.ActivateShuffleButton(true);
+        uiManager.ActivateShuffleButton(true);
     }
 
     /// <summary>
