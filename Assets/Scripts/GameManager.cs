@@ -61,6 +61,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Start()
     {
+        StartCoroutine(TransitionManager.instance.FadePanel(0));
+
         GameData.instance.InitGame();
 
         gameState = GameState.Select;
