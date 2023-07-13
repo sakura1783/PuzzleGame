@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     private float timer;
 
-    [SerializeField] private GameObject resultPop;
+    [SerializeField] private ResultPopUp resultPop;
 
 
     IEnumerator Start()
@@ -388,7 +388,8 @@ public class GameManager : MonoBehaviour
         resultPop.transform.DOLocalMoveY(0, 1.0f).SetEase(Ease.Linear)
             .OnComplete(() =>
             {
-                Debug.Log("リザルト内容を表示します");
+                //リザルト表示(スコアと消した干支の数を)
+                resultPop.DisplayResult(GameData.instance.score, GameData.instance.eraseEtoCount);
             });
 
         yield return new WaitForSeconds(1);

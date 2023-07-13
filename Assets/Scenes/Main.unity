@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 121030822}
   - component: {fileID: 121030824}
   - component: {fileID: 121030823}
+  - component: {fileID: 121030825}
   m_Layer: 5
   m_Name: ResultPopUp
   m_TagString: Untagged
@@ -200,6 +201,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 121030821}
   m_CullTransparentMesh: 1
+--- !u!114 &121030825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121030821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffa5991a9a7bf412ea009cd629a18af7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txtScore: {fileID: 2118238742}
+  txtEraseEtoCount: {fileID: 1191614469}
+  btnClosePop: {fileID: 751082041}
 --- !u!1 &134606304
 GameObject:
   m_ObjectHideFlags: 0
@@ -958,6 +974,7 @@ GameObject:
   - component: {fileID: 751082043}
   - component: {fileID: 751082042}
   - component: {fileID: 751082041}
+  - component: {fileID: 751082044}
   m_Layer: 5
   m_Name: btnClosePopUp
   m_TagString: Untagged
@@ -1068,6 +1085,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 751082039}
   m_CullTransparentMesh: 1
+--- !u!225 &751082044
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751082039}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!224 &843360676 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3210736881502834936, guid: 1f64718e3ded64faba77ded06a5da90a, type: 3}
@@ -1201,7 +1230,7 @@ MonoBehaviour:
   linkCount: 0
   etoDistance: 1
   uiManager: {fileID: 1807477338}
-  resultPop: {fileID: 121030821}
+  resultPop: {fileID: 121030825}
 --- !u!4 &901638065
 Transform:
   m_ObjectHideFlags: 0
@@ -1897,7 +1926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3210736881502834937, guid: 1f64718e3ded64faba77ded06a5da90a, type: 3}
       propertyPath: m_Text
-      value: 12345
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3210736881502834937, guid: 1f64718e3ded64faba77ded06a5da90a, type: 3}
       propertyPath: m_FontData.m_Font
@@ -1930,6 +1959,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3210736881502834936, guid: 1f64718e3ded64faba77ded06a5da90a, type: 3}
   m_PrefabInstance: {fileID: 1191614467}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1191614469 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3210736881502834937, guid: 1f64718e3ded64faba77ded06a5da90a, type: 3}
+  m_PrefabInstance: {fileID: 1191614467}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1202826745
 GameObject:
   m_ObjectHideFlags: 0
@@ -2668,7 +2708,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3210736881502834937, guid: 1f64718e3ded64faba77ded06a5da90a, type: 3}
       propertyPath: m_Text
-      value: 12345
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3210736881502834937, guid: 1f64718e3ded64faba77ded06a5da90a, type: 3}
       propertyPath: m_FontData.m_Font
@@ -2701,6 +2741,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3210736881502834936, guid: 1f64718e3ded64faba77ded06a5da90a, type: 3}
   m_PrefabInstance: {fileID: 1823876488}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2118238742 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3210736881502834937, guid: 1f64718e3ded64faba77ded06a5da90a, type: 3}
+  m_PrefabInstance: {fileID: 1823876488}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3210736880735517020
 PrefabInstance:
   m_ObjectHideFlags: 0
