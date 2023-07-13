@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private List<GameData.EtoData> selectedEtoDataList = new List<GameData.EtoData>();  //今回のゲームで生成する干支の種類
 
+    [SerializeField] private GameObject eraseEffectParticle;
+
 
     IEnumerator Start()
     {
@@ -320,6 +322,12 @@ public class GameManager : MonoBehaviour
             {
                 //干支リストから取り除く
                 etoList.Remove(eraseEtoList[i]);
+
+                //干支の削除エフェクト生成
+                GameObject particle = Instantiate(eraseEffectParticle, eraseEtoList[i].gameObject.transform);
+
+                //エフェクトの位置をetoSetTranに変更(干支の子オブジェクトのままだと、干支が破棄されると同時にエフェクトも破棄されてしまうため)
+                particle.transform.SetParent(etoSetTran);
 
                 //干支を削除
                 Destroy(eraseEtoList[i].gameObject);

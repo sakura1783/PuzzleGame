@@ -1354,6 +1354,7 @@ MonoBehaviour:
   uiManager: {fileID: 1807477338}
   resultPop: {fileID: 121030825}
   selectedEtoDataList: []
+  eraseEffectParticle: {fileID: 1485997154728238161, guid: 338abfa5b7a9e41548df3098429f1c45, type: 3}
 --- !u!4 &901638065
 Transform:
   m_ObjectHideFlags: 0
