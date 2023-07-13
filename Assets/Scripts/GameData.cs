@@ -42,6 +42,8 @@ public class GameData : MonoBehaviour
 
     public float etoRate = 2;
 
+    public SkillType selectSkillType;
+
 
     void Awake()
     {

@@ -1413,7 +1413,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681830144}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -1467,13 +1467,14 @@ MonoBehaviour:
   score: 0
   etoPoint: 100
   eraseEtoCount: 0
-  initTime: 10
+  initTime: 30
   gameTime: 0
   etoDataList: []
   selectedEtoData:
     etoType: 0
     sprite: {fileID: 0}
   etoRate: 2
+  selectSkillType: 0
 --- !u!4 &682870314
 Transform:
   m_ObjectHideFlags: 0
@@ -2209,7 +2210,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
