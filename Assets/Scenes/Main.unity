@@ -3514,6 +3514,8 @@ MonoBehaviour:
   txtScore: {fileID: 843360677}
   txtTimer: {fileID: 235031259}
   btnShuffle: {fileID: 198761546}
+  btnSkill: {fileID: 458057133}
+  imgSkillPoint: {fileID: 1123924992}
   shuffle: {fileID: 1507839546}
 --- !u!1001 &1823876488
 PrefabInstance:

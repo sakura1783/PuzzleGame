@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,8 +11,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text txtTimer;
 
     [SerializeField] private Button btnShuffle;
+    [SerializeField] private Button btnSkill;
+
+    [SerializeField] private Image imgSkillPoint;
 
     [SerializeField] private Shuffle shuffle;
+
+    private Tweener tweener = null;  //DOTweenの処理を代入する変数
+
+    private UnityEvent unityEvent;  //UnityEventとしてメソッドを代入する変数
 
 
     /// <summary>
@@ -75,5 +83,80 @@ public class UIManager : MonoBehaviour
 
         //シャッフル開始
         shuffle.StartShuffle();
+    }
+
+    /// <summary>
+    /// 選択した干支の持つスキルを登録
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator SetUpSkillButton(UnityAction unityAction)
+    {
+        btnSkill.interactable = false;
+
+        //スキルの登録がない場合、スキルボタンには何も登録しない
+        if (unityAction == null)
+        {
+            yield break;
+        }
+
+        //UnityEvent初期化
+        unityEvent = new UnityEvent();
+
+        //UnityEventにUnityActionを登録(UnityActionにはメソッドが代入されている)
+        unityEvent.AddListener(unityAction);
+
+        btnSkill.onClick.AddListener(OnClickButtonSkill);
+    }
+
+    /// <summary>
+    /// スキルポイント加算
+    /// </summary>
+    /// <param name="count">消した干支の数</param>
+    public void AddSkillPoint(int count)
+    {
+        //FillAmountの現在地を取得
+        float amount = imgSkillPoint.fillAmount;
+
+        float value = amount += count * 0.05f;
+
+        imgSkillPoint.DOFillAmount(value, 0.5f);
+
+        //FillAmountが1になり、スキルボタンがアニメしていなければ
+        if (imgSkillPoint.fillAmount >= 1 && tweener == null)
+        {
+            btnSkill.interactable = true;
+
+            //ループ処理を行い、スキルボタンが押されるまでスケールを変化させるアニメを実行する
+            tweener = imgSkillPoint.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 0.25f).SetEase(Ease.InCirc).SetLoops(-1, LoopType.Yoyo);
+        }
+    }
+
+    /// <summary>
+    /// btnSkillを押した際の処理
+    /// </summary>
+    public void OnClickButtonSkill()
+    {
+        btnSkill.interactable = false;
+
+        //登録されているスキル(UnityActionに登録されているメソッド)を使用
+        unityEvent.Invoke();
+
+        imgSkillPoint.DOFillAmount(0, 1.0f);
+
+        //スキルボタンのループアニメを破棄し、tweener変数をnullにする
+        tweener.Kill();
+        tweener = null;
+
+        //スキルボタンのサイズをもとの大きさに戻す
+        imgSkillPoint.transform.localScale = Vector3.one;
+    }
+
+    /// <summary>
+    /// 複数のボタンを押せないようにする
+    /// </summary>
+    public void InActiveButtons()
+    {
+        btnShuffle.interactable = false;
+        btnSkill.interactable = false;
     }
 }
