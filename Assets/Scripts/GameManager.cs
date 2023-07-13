@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private List<Eto> etoList = new List<Eto>();  //生成された干支のリスト
 
-    [SerializeField] private Sprite[] etoSprites;  //干支の画像データ
+    //[SerializeField] private Sprite[] etoSprites;  //干支の画像データ
 
     private Eto firstSelectEto;  //最初にドラッグした干支の情報
 
@@ -50,13 +50,25 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private ResultPopUp resultPop;
 
+    [SerializeField] private List<GameData.EtoData> selectedEtoDataList = new List<GameData.EtoData>();  //今回のゲームで生成する干支の種類
+
 
     IEnumerator Start()
     {
         gameState = GameState.Ready;
 
         //干支の画像を読み込む。この処理が終了するまで、次の処理へは行かないようにする
-        yield return StartCoroutine(LoadEtoSprites());
+        //yield return StartCoroutine(LoadEtoSprites());
+
+        //もし干支データのリストが作成されていなければ
+        if (GameData.instance.etoDataList.Count == 0)
+        {
+            //干支データの作成。この処理が終了するまで、次の処理へはいかないようにする
+            yield return StartCoroutine(GameData.instance.InitEtoDataList());
+        }
+
+        //今回のゲームに登場する干支をランダムで選択。この処理が終了するまで、次の処理へはいかないようにする
+        yield return StartCoroutine(SetUpEtoTypes(GameData.instance.etoTypeCount));
 
         uiManager.UpdateDisplayGameTime(GameData.instance.gameTime);
 
@@ -106,23 +118,50 @@ public class GameManager : MonoBehaviour
         }
 
         uiManager.UpdateDisplayGameTime(GameData.instance.gameTime);
-    } 
+    }
 
-    private IEnumerator LoadEtoSprites()
+    //private IEnumerator LoadEtoSprites()
+    //{
+    //    //配列の初期化(12個の画像が入るようにSprite型の配列を12個用意する)
+    //    etoSprites = new Sprite[(int)EtoType.Count];
+
+    //    //Resources.LoadAllを行い、分割されている干支の画像を順番に全て読み込んで配列に代入
+    //    etoSprites = Resources.LoadAll<Sprite>("Sprites/Eto");
+
+    //    //1つのファイルを12分割していない場合には、以下の処理を行う。12分割している場合には使用しない
+    //    //for (int i = 0; i < etoSprites.Length; i++)
+    //    //{
+    //    //    etoSprites[i] = Resources.Load<Sprite>("Sprites/Eto_" + i);
+    //    //}
+
+    //    yield break;
+    //}
+
+    /// <summary>
+    /// ゲームに登場させる干支の種類を設定する
+    /// </summary>
+    /// <param name="typeCount"></param>
+    /// <returns></returns>
+    private IEnumerator SetUpEtoTypes(int typeCount)
     {
-        //配列の初期化(12個の画像が入るようにSprite型の配列を12個用意する)
-        etoSprites = new Sprite[(int)EtoType.Count];
+        //新しくリストを用意して初期化に合わせてetoDataListを複製して、干支の候補リストとする
+        List<GameData.EtoData> candidateEtoDataList = new List<GameData.EtoData>(GameData.instance.etoDataList);
 
-        //Resources.LoadAllを行い、分割されている干支の画像を順番に全て読み込んで配列に代入
-        etoSprites = Resources.LoadAll<Sprite>("Sprites/Eto");
+        //干支を指定数だけランダムに選ぶ(干支の種類は重複させない)
+        while (typeCount > 0)
+        {
+            int randomValue = Random.Range(0, candidateEtoDataList.Count);
 
-        //1つのファイルを12分割していない場合には、以下の処理を行う。12分割している場合には使用しない
-        //for (int i = 0; i < etoSprites.Length; i++)
-        //{
-        //    etoSprites[i] = Resources.Load<Sprite>("Sprites/Eto_" + i);
-        //}
+            //今回のゲームで生成する干支リストに追加
+            selectedEtoDataList.Add(candidateEtoDataList[randomValue]);
 
-        yield break;
+            //干支のリストから選択された干支の情報を削除(干支を重複させないため)
+            candidateEtoDataList.Remove(candidateEtoDataList[randomValue]);
+
+            typeCount--;
+
+            yield return null;
+        }
     }
 
     /// <summary>
@@ -130,9 +169,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="generateCount"></param>
     /// <returns></returns>
-    private IEnumerator CreateEtos(int generateCount)
+    private IEnumerator CreateEtos(int count)
     {
-        for (int i = 0; i < generateCount; i++)
+        for (int i = 0; i < count; i++)
         {
             Eto eto = Instantiate(etoPrefab, etoSetTran, false);
 
@@ -142,9 +181,9 @@ public class GameManager : MonoBehaviour
             //生成位置をランダムにして落下位置を変化させる
             eto.transform.localPosition = new Vector2(Random.Range(-maxRange, maxRange), fallPos);
 
-            int randomValue = Random.Range(0, (int)EtoType.Count);
+            int randomValue = Random.Range(0, selectedEtoDataList.Count);
 
-            eto.SetUpEto((EtoType)randomValue, etoSprites[randomValue]);
+            eto.SetUpEto(selectedEtoDataList[randomValue].etoType, selectedEtoDataList[randomValue].sprite);
 
             etoList.Add(eto);
 
