@@ -636,7 +636,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 300, y: 300}
-  m_Spacing: {x: 20, y: 20}
+  m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 3
 --- !u!1001 &235031257
@@ -1252,6 +1252,7 @@ GameObject:
   m_Component:
   - component: {fileID: 681830145}
   - component: {fileID: 681830146}
+  - component: {fileID: 681830147}
   m_Layer: 5
   m_Name: EtoSelectPopUp
   m_TagString: Untagged
@@ -1294,6 +1295,22 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &681830147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681830144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a977027ff4d42a48db23b2c2e7040b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  etoButtonPrefab: {fileID: 5882825522373350482, guid: e529cf8d345574002b89a7583477effa, type: 3}
+  etoButtonTran: {fileID: 203041809}
+  btnStart: {fileID: 1798703143}
+  canvasGroup: {fileID: 681830146}
 --- !u!1 &682870312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1331,6 +1348,10 @@ MonoBehaviour:
   initTime: 10
   gameTime: 0
   etoDataList: []
+  selectedEtoData:
+    etoType: 0
+    sprite: {fileID: 0}
+  etoRate: 2
 --- !u!4 &682870314
 Transform:
   m_ObjectHideFlags: 0
@@ -1694,6 +1715,7 @@ MonoBehaviour:
   resultPop: {fileID: 121030825}
   selectedEtoDataList: []
   eraseEffectParticle: {fileID: 1485997154728238161, guid: 338abfa5b7a9e41548df3098429f1c45, type: 3}
+  etoSelectPop: {fileID: 681830147}
 --- !u!4 &901638065
 Transform:
   m_ObjectHideFlags: 0

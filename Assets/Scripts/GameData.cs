@@ -38,6 +38,10 @@ public class GameData : MonoBehaviour
 
     public List<EtoData> etoDataList = new List<EtoData>();
 
+    public EtoData selectedEtoData;
+
+    public float etoRate = 2;
+
 
     void Awake()
     {
@@ -51,13 +55,13 @@ public class GameData : MonoBehaviour
             Destroy(gameObject);
         }
 
-        InitGame();
+        //InitGame();
     }
 
     /// <summary>
     /// ゲームの初期化
     /// </summary>
-    private void InitGame()
+    public void InitGame()
     {
         score = 0;
         eraseEtoCount = 0;
@@ -78,7 +82,7 @@ public class GameData : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         //初期化　GameDataゲームオブジェクトはシーン遷移されても破棄されない設定になっているので、ここで再度、初期化の設定を行う必要がある
-        InitGame();
+        //InitGame();
     }
 
     public IEnumerator InitEtoDataList()
