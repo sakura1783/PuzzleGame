@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Eto etoPrefab;
 
-    [SerializeField] private Transform etoSetTran;
+    public Transform etoSetTran;
 
     [SerializeField] private float maxRotateAngle = 35.0f;  //干支生成時の最大回転角度
 
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float fallPos = 1400.0f;  //干支生成時の落下位置
 
-    [SerializeField] private List<Eto> etoList = new List<Eto>();  //生成された干支のリスト
+    public List<Eto> etoList = new List<Eto>();  //生成された干支のリスト
 
     //[SerializeField] private Sprite[] etoSprites;  //干支の画像データ
 
@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     public float etoDistance = 1.0f;  //スワイプでつながる干支の範囲
 
     [SerializeField] private UIManager uiManager;
+    public UIManager UiManager => uiManager;
 
     private float timer;
 
@@ -54,9 +55,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private List<GameData.EtoData> selectedEtoDataList = new List<GameData.EtoData>();  //今回のゲームで生成する干支の種類
 
-    [SerializeField] private GameObject eraseEffectParticle;
+    public GameObject eraseEffectParticle;
 
     [SerializeField] private EtoSelectPopUp etoSelectPop;
+
+    [SerializeField] private Bomb bombPrefab;
 
 
     IEnumerator Start()
@@ -211,7 +214,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="generateCount"></param>
     /// <returns></returns>
-    private IEnumerator CreateEtos(int count)
+    public IEnumerator CreateEtos(int count)
     {
         uiManager.ActivateShuffleButton(false);
 
@@ -355,6 +358,16 @@ public class GameManager : MonoBehaviour
         //つながっている干支が3つ以上あったら削除する処理に移る
         if (eraseEtoList.Count >= 3)
         {
+            //つながっている干支が7つ以上あったら、ボム生成
+            if (eraseEtoList.Count >= 7)
+            {
+                Bomb bomb = Instantiate(bombPrefab, lastSelectEto.transform);
+                bomb.transform.SetParent(etoSetTran);
+                bomb.GetGameManager(this);
+
+                Debug.Log("ボム生成");
+            }
+
             //選択されている干支を消す
             for (int i = 0; i < eraseEtoList.Count; i++)
             {
@@ -448,7 +461,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="etoType"></param>
     /// <param name="count"></param>
-    private void AddScores(EtoType? etoType, int count)
+    public void AddScores(EtoType? etoType, int count)
     {
         bool isSelectEto = false;
 

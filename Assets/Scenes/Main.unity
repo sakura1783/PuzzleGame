@@ -1413,7 +1413,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681830144}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -1462,7 +1462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a93249949d147abbe343bb85ae11ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  etoTypeCount: 5
+  etoTypeCount: 4
   createEtoCount: 50
   score: 0
   etoPoint: 100
@@ -1839,6 +1839,7 @@ MonoBehaviour:
   selectedEtoDataList: []
   eraseEffectParticle: {fileID: 1485997154728238161, guid: 338abfa5b7a9e41548df3098429f1c45, type: 3}
   etoSelectPop: {fileID: 681830147}
+  bombPrefab: {fileID: -3360620970804934717, guid: 65e4ad18ce7ef47c99fa6216ea325bee, type: 3}
 --- !u!4 &901638065
 Transform:
   m_ObjectHideFlags: 0
@@ -3508,7 +3509,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436880953}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
