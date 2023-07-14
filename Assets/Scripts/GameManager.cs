@@ -61,6 +61,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Start()
     {
+        AudioManager.instance.PreparePlayBGM(0);
+
         StartCoroutine(TransitionManager.instance.FadePanel(0));
 
         GameData.instance.InitGame();
@@ -369,6 +371,8 @@ public class GameManager : MonoBehaviour
                 Destroy(eraseEtoList[i].gameObject);
             }
 
+            AudioManager.instance.PreparePlaySE(1);
+
             //スコアと消した干支の数の加算
             AddScores(currentEtoType, eraseEtoList.Count);
 
@@ -482,6 +486,8 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
+        AudioManager.instance.PreparePlayBGM(2);
+
         //リザルトのポップアップを画面内に移動
         yield return StartCoroutine(MoveResultPopUp());
     }
@@ -570,9 +576,15 @@ public class GameManager : MonoBehaviour
         {
             if (etoList[i].etoType == maxEtoType)
             {
+                //演出用のパーティクル生成
+                GameObject particle = Instantiate(eraseEffectParticle, etoList[i].gameObject.transform);
+                particle.transform.SetParent(etoSetTran);
+
                 Destroy(etoList[i].gameObject);
             }
         }
+
+        AudioManager.instance.PreparePlaySE(1);
 
         //etoListから対象の干支を削除
         etoList.RemoveAll(x => x.etoType == maxEtoType);

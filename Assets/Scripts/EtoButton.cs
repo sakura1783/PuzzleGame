@@ -43,6 +43,8 @@ public class EtoButton : MonoBehaviour
     /// <returns></returns>
     private IEnumerator OnClickEtoButton()
     {
+        AudioManager.instance.PreparePlaySE(0);
+
         //選択した干支の情報をGameDataに保存
         GameData.instance.selectedEtoData = etoData;
 

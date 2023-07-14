@@ -77,6 +77,8 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void OnClickButtonShuffle()
     {
+        AudioManager.instance.PreparePlaySE(0);
+
         Debug.Log("シャッフルボタンが押されました");
 
         ActivateShuffleButton(false);
@@ -137,6 +139,8 @@ public class UIManager : MonoBehaviour
     public void OnClickButtonSkill()
     {
         btnSkill.interactable = false;
+
+        AudioManager.instance.PreparePlaySE(0);
 
         //登録されているスキル(UnityActionに登録されているメソッド)を使用
         unityEvent.Invoke();

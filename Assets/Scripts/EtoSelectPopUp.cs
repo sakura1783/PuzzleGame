@@ -64,6 +64,10 @@ public class EtoSelectPopUp : MonoBehaviour
     {
         btnStart.interactable = false;
 
+        AudioManager.instance.PreparePlaySE(0);
+
+        AudioManager.instance.PreparePlayBGM(1);
+
         StartCoroutine(gameManager.PrepareGame());
 
         canvasGroup.DOFade(0, 0.5f);
