@@ -1413,7 +1413,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681830144}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -1467,7 +1467,7 @@ MonoBehaviour:
   score: 0
   etoPoint: 100
   eraseEtoCount: 0
-  initTime: 25
+  initTime: 60
   gameTime: 0
   etoDataList: []
   selectedEtoData:
@@ -3508,7 +3508,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436880953}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
