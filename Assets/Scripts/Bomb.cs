@@ -29,7 +29,7 @@ public class Bomb : MonoBehaviour
     {
         if (col.TryGetComponent(out Eto eto))
         {
-            Eto[] count = col.GetComponents<Eto>();
+            //Eto[] count = col.GetComponents<Eto>();
 
             //演出用のパーティクル生成
             GameObject particle = Instantiate(gameManager.eraseEffectParticle, eto.transform);
@@ -45,7 +45,7 @@ public class Bomb : MonoBehaviour
             Destroy(eto.gameObject);
 
             //削除した分、干支を生成する
-            StartCoroutine(gameManager.CreateEtos(count.Length));
+            StartCoroutine(gameManager.CreateEtos(1));
 
             //干支を削除した後にボムも消す
             Destroy(gameObject);
