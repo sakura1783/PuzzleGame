@@ -61,6 +61,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Bomb bombPrefab;
 
+    [SerializeField] private int bombGenerateCount;  //ボムの生成に必要なチェーン数(最初の干支を抜かして、チェーンしている数を設定する。7つでボムを生成したいのなら、6と)
+
+    [SerializeField] private float bombRadius;
+
 
     IEnumerator Start()
     {
@@ -355,48 +359,55 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void OnEndDrag()
     {
+        //つながっている干支が7つ以上あったら、ボム生成
+        //if (eraseEtoList.Count >= 7)
+
+        //つながっている干支が指定数以上あったら、ボム生成
+        if (linkCount >= bombGenerateCount)
+        {
+            Bomb bomb = Instantiate(bombPrefab, lastSelectEto.transform);
+            bomb.transform.SetParent(etoSetTran);
+            //bomb.GetGameManager(this);
+
+            bomb.SetUpBomb(this, bombRadius);
+
+            Debug.Log("ボム生成");
+        }
+
         //つながっている干支が3つ以上あったら削除する処理に移る
         if (eraseEtoList.Count >= 3)
         {
-            //つながっている干支が7つ以上あったら、ボム生成
-            if (eraseEtoList.Count >= 7)
-            {
-                Bomb bomb = Instantiate(bombPrefab, lastSelectEto.transform);
-                bomb.transform.SetParent(etoSetTran);
-                bomb.GetGameManager(this);
+            ////選択されている干支を消す
+            //for (int i = 0; i < eraseEtoList.Count; i++)
+            //{
+            //    //干支リストから取り除く
+            //    etoList.Remove(eraseEtoList[i]);
 
-                Debug.Log("ボム生成");
-            }
+            //    //干支の削除エフェクト生成
+            //    GameObject particle = Instantiate(eraseEffectParticle, eraseEtoList[i].gameObject.transform);
 
-            //選択されている干支を消す
-            for (int i = 0; i < eraseEtoList.Count; i++)
-            {
-                //干支リストから取り除く
-                etoList.Remove(eraseEtoList[i]);
+            //    //エフェクトの位置をetoSetTranに変更(干支の子オブジェクトのままだと、干支が破棄されると同時にエフェクトも破棄されてしまうため)
+            //    particle.transform.SetParent(etoSetTran);
 
-                //干支の削除エフェクト生成
-                GameObject particle = Instantiate(eraseEffectParticle, eraseEtoList[i].gameObject.transform);
+            //    //干支を削除
+            //    Destroy(eraseEtoList[i].gameObject);
+            //}
 
-                //エフェクトの位置をetoSetTranに変更(干支の子オブジェクトのままだと、干支が破棄されると同時にエフェクトも破棄されてしまうため)
-                particle.transform.SetParent(etoSetTran);
+            //AudioManager.instance.PreparePlaySE(1);
 
-                //干支を削除
-                Destroy(eraseEtoList[i].gameObject);
-            }
+            ////スコアと消した干支の数の加算
+            //AddScores(currentEtoType, eraseEtoList.Count);
 
-            AudioManager.instance.PreparePlaySE(1);
+            ////スキルポイント加算
+            //uiManager.AddSkillPoint(eraseEtoList.Count);
 
-            //スコアと消した干支の数の加算
-            AddScores(currentEtoType, eraseEtoList.Count);
+            ////消した干支の数だけ新しい干支をランダムに生成
+            //StartCoroutine(CreateEtos(eraseEtoList.Count));
 
-            //スキルポイント加算
-            uiManager.AddSkillPoint(eraseEtoList.Count);
+            ////削除リストを空にする
+            //eraseEtoList.Clear();
 
-            //消した干支の数だけ新しい干支をランダムに生成
-            StartCoroutine(CreateEtos(eraseEtoList.Count));
-
-            //削除リストを空にする
-            eraseEtoList.Clear();
+            EraseEtos();
         }
         //つながっている干支が2つ以下の場合
         else
@@ -415,6 +426,58 @@ public class GameManager : MonoBehaviour
         firstSelectEto = null;
         lastSelectEto = null;
         currentEtoType = null;
+    }
+
+    /// <summary>
+    /// 選択されている干支を消す
+    /// </summary>
+    public void EraseEtos()
+    {
+        //選択されている干支を消す
+        for (int i = 0; i < eraseEtoList.Count; i++)
+        {
+            //干支リストから取り除く
+            etoList.Remove(eraseEtoList[i]);
+
+            //干支の削除エフェクト生成
+            GameObject particle = Instantiate(eraseEffectParticle, eraseEtoList[i].gameObject.transform);
+
+            //エフェクトの位置をetoSetTranに変更(干支の子オブジェクトのままだと、干支が破棄されると同時にエフェクトも破棄されてしまうため)
+            particle.transform.SetParent(etoSetTran);
+
+            //干支を削除
+            Destroy(eraseEtoList[i].gameObject);
+        }
+
+        AudioManager.instance.PreparePlaySE(1);
+
+        //スコアと消した干支の数の加算
+        AddScores(currentEtoType, eraseEtoList.Count);
+
+        //スキルポイント加算
+        uiManager.AddSkillPoint(eraseEtoList.Count);
+
+        //消した干支の数だけ新しい干支をランダムに生成
+        StartCoroutine(CreateEtos(eraseEtoList.Count));
+
+        //削除リストを空にする
+        eraseEtoList.Clear();
+    }
+
+    /// <summary>
+    /// 複数の削除候補の干支を削除リストにまとめて追加してから削除
+    /// このメソッドをBomb.csから実行する
+    /// </summary>
+    /// <param name="eraseEtos"></param>
+    public void AddRangeEraseEtoList(List<Eto> eraseEtos)
+    {
+        //複数の削除候補の干支を削除リストにまとめて追加
+        eraseEtoList.AddRange(eraseEtos);
+
+        //干支がつながっている数を初期化
+        linkCount = 0;
+
+        EraseEtos();
     }
 
     /// <summary>

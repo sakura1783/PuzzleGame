@@ -1840,6 +1840,8 @@ MonoBehaviour:
   eraseEffectParticle: {fileID: 1485997154728238161, guid: 338abfa5b7a9e41548df3098429f1c45, type: 3}
   etoSelectPop: {fileID: 681830147}
   bombPrefab: {fileID: -3360620970804934717, guid: 65e4ad18ce7ef47c99fa6216ea325bee, type: 3}
+  bombGenerateCount: 6
+  bombRadius: 0.7
 --- !u!4 &901638065
 Transform:
   m_ObjectHideFlags: 0
